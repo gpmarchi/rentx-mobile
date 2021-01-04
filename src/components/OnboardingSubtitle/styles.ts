@@ -9,7 +9,7 @@ export const Container = styled.View`
 `;
 
 export const Subtitle = styled.Text`
-  font-weight: normal;
+  font-family: 'Inter-Regular';
   font-size: 15px;
   color: #7a7a80;
   width: 60%;

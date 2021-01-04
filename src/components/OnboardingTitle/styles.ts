@@ -9,7 +9,7 @@ export const Container = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-weight: bold;
+  font-family: 'Archivo-Bold';
   font-size: 40px;
   color: #47474d;
   width: 60%;
