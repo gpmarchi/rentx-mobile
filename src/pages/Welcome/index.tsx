@@ -32,7 +32,7 @@ const Welcome: React.FC = () => {
           <LoginButton>
             <LoginButtonText>Login</LoginButtonText>
           </LoginButton>
-          <RegisterButton>
+          <RegisterButton onPress={() => navigation.navigate('CreateAccount')}>
             <RegisterButtonText>Cadastro</RegisterButtonText>
           </RegisterButton>
         </Actions>

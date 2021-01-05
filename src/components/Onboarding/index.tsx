@@ -19,7 +19,7 @@ const AppOnboarding: React.FC = () => {
       onDone={() => navigation.navigate('Welcome')}
       pages={[
         {
-          backgroundColor: '#fff',
+          backgroundColor: '#ffffff',
           image: <OnboardingHeader icon={scheduleImg} page={pageNumber01} />,
           title: <OnboardingTitle title="Primeiro, escolha a data" />,
           subtitle: (
@@ -27,7 +27,7 @@ const AppOnboarding: React.FC = () => {
           ),
         },
         {
-          backgroundColor: '#fff',
+          backgroundColor: '#ffffff',
           image: <OnboardingHeader icon={carImg} page={pageNumber02} />,
           title: <OnboardingTitle title="Depois, escolha o carro" />,
           subtitle: (
