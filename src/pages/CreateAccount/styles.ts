@@ -26,4 +26,5 @@ export const FormTitle = styled.Text`
   font-size: 20px;
   color: #3d3d4d;
   margin-top: 120px;
+  margin-bottom: 30px;
 `;
