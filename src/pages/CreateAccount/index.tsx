@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   StatusBar,
   KeyboardAvoidingView,
@@ -6,6 +6,8 @@ import {
   Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -13,7 +15,16 @@ import Input from '../../components/Input';
 import { Container, Title, Subtitle, FormTitle } from './styles';
 
 const CreateAccount: React.FC = () => {
+  const formRef = useRef<FormHandles>(null);
   const navigation = useNavigation();
+
+  const handleAccountCreation = useCallback(
+    (data: object) => {
+      console.log(data);
+      navigation.navigate('CreatePassword', data);
+    },
+    [navigation],
+  );
 
   return (
     <>
@@ -30,10 +41,18 @@ const CreateAccount: React.FC = () => {
           <Container>
             <Title>Crie sua conta</Title>
             <Subtitle>Faça seu cadastro de forma rápida e fácil.</Subtitle>
-            <FormTitle>1. Dados</FormTitle>
-            <Input name="name" icon="person-outline" placeholder="Nome" />
-            <Input name="email" icon="mail-outline" placeholder="E-mail" />
-            <Button>Próximo</Button>
+            <FormTitle>01. Dados</FormTitle>
+            <Form ref={formRef} onSubmit={handleAccountCreation}>
+              <Input name="name" icon="person-outline" placeholder="Nome" />
+              <Input name="email" icon="mail-outline" placeholder="E-mail" />
+              <Button
+                onPress={() => {
+                  formRef.current?.submitForm();
+                }}
+              >
+                Próximo
+              </Button>
+            </Form>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
