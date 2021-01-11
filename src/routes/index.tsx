@@ -5,6 +5,7 @@ import Onboarding from '../components/Onboarding';
 import Welcome from '../pages/Welcome';
 import CreateAccount from '../pages/CreateAccount';
 import CreatePassword from '../pages/CreatePassword';
+import ConfirmRegistration from '../pages/ConfirmRegistration';
 
 const App = createStackNavigator();
 
@@ -27,6 +28,7 @@ const AppRoutes: React.FC = () => (
       name="CreatePassword"
       component={CreatePassword}
     />
+    <App.Screen name="ConfirmRegistration" component={ConfirmRegistration} />
   </App.Navigator>
 );
 

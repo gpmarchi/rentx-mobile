@@ -26,10 +26,14 @@ const CreatePassword: React.FC = () => {
 
   const routeParams = params as RouteParams;
 
-  const handleUserSignUp = useCallback((data: object) => {
-    console.log(routeParams);
-    console.log(data);
-  }, []);
+  const handleUserSignUp = useCallback(
+    (data: object) => {
+      console.log(routeParams);
+      console.log(data);
+      navigation.navigate('ConfirmRegistration');
+    },
+    [navigation, routeParams],
+  );
 
   return (
     <>
