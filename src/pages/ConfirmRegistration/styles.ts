@@ -4,12 +4,11 @@ import { RectButton } from 'react-native-gesture-handler';
 export const Container = styled.View`
   flex: 1;
   align-items: center;
+  justify-content: center;
   background-color: #1b1b1f;
 `;
 
-export const Logo = styled.Image`
-  margin-top: 120px;
-`;
+export const Logo = styled.Image``;
 
 export const Check = styled.Image`
   margin-top: 100px;
