@@ -6,6 +6,7 @@ import Welcome from '../pages/Welcome';
 import CreateAccount from '../pages/CreateAccount';
 import CreatePassword from '../pages/CreatePassword';
 import ConfirmRegistration from '../pages/ConfirmRegistration';
+import SignIn from '../pages/SignIn';
 
 const App = createStackNavigator();
 
@@ -29,6 +30,11 @@ const AppRoutes: React.FC = () => (
       component={CreatePassword}
     />
     <App.Screen name="ConfirmRegistration" component={ConfirmRegistration} />
+    <App.Screen
+      options={{ headerShown: true, headerBackTitleVisible: false, title: '' }}
+      name="SignIn"
+      component={SignIn}
+    />
   </App.Navigator>
 );
 
