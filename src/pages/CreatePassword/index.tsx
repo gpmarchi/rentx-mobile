@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import {
+  View,
   StatusBar,
   KeyboardAvoidingView,
   ScrollView,
@@ -50,7 +51,9 @@ const CreatePassword: React.FC = () => {
           <Container>
             <Title>Crie sua conta</Title>
             <Subtitle>Faça seu cadastro de forma rápida e fácil.</Subtitle>
-            <FormTitle>02. Senha</FormTitle>
+            <View>
+              <FormTitle>02. Senha</FormTitle>
+            </View>
             <Form ref={formRef} onSubmit={handleUserSignUp}>
               <Input
                 name="password"

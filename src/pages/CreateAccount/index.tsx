@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import {
+  View,
   StatusBar,
   KeyboardAvoidingView,
   ScrollView,
@@ -41,7 +42,9 @@ const CreateAccount: React.FC = () => {
           <Container>
             <Title>Crie sua conta</Title>
             <Subtitle>Faça seu cadastro de forma rápida e fácil.</Subtitle>
-            <FormTitle>01. Dados</FormTitle>
+            <View>
+              <FormTitle>01. Dados</FormTitle>
+            </View>
             <Form ref={formRef} onSubmit={handleAccountCreation}>
               <Input name="name" icon="person-outline" placeholder="Nome" />
               <Input name="email" icon="mail-outline" placeholder="E-mail" />

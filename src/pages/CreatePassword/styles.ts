@@ -1,6 +1,8 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
+  flex: 1;
+  justify-content: center;
   padding: 0 25px 0 25px;
 `;
 
@@ -9,7 +11,6 @@ export const Title = styled.Text`
   font-size: 40px;
   color: #3d3d4d;
   width: 60%;
-  margin-top: 110px;
 `;
 
 export const Subtitle = styled.Text`
