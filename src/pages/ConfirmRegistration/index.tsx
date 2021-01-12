@@ -29,7 +29,7 @@ const ConfirmRegistration: React.FC = () => {
         <Subtitle>Agora é só fazer login e aproveitar.</Subtitle>
         <ConfirmButton
           onPress={() => {
-            navigation.navigate('Onboarding');
+            navigation.navigate('SignIn');
           }}
         >
           <ConfirmButtonText>Ok</ConfirmButtonText>
