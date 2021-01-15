@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  TextInput,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
@@ -25,6 +26,8 @@ import {
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const passwordInputRef = useRef<TextInput>(null);
+
   const navigation = useNavigation();
 
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
@@ -55,12 +58,26 @@ const SignIn: React.FC = () => {
               Faça seu login para começar uma experiência incrível.
             </Subtitle>
             <Form ref={formRef} onSubmit={handleSignIn}>
-              <Input name="email" icon="mail-outline" placeholder="E-mail" />
               <Input
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                name="email"
+                icon="mail-outline"
+                placeholder="E-mail"
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  passwordInputRef.current?.focus();
+                }}
+              />
+              <Input
+                ref={passwordInputRef}
                 name="password"
                 icon="lock-outline"
                 placeholder="Senha"
                 secureTextEntry
+                returnKeyType="send"
+                onSubmitEditing={() => formRef.current?.submitForm()}
               />
               <Actions>
                 <RememberMe

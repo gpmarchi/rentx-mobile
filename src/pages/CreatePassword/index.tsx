@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  TextInput,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
@@ -22,7 +23,10 @@ interface RouteParams {
 
 const CreatePassword: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const confirmInputRef = useRef<TextInput>(null);
+
   const navigation = useNavigation();
+
   const { params } = useRoute();
 
   const routeParams = params as RouteParams;
@@ -60,12 +64,19 @@ const CreatePassword: React.FC = () => {
                 icon="lock-outline"
                 placeholder="Senha"
                 secureTextEntry
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  confirmInputRef.current?.focus();
+                }}
               />
               <Input
+                ref={confirmInputRef}
                 name="confirmation"
                 icon="lock-outline"
                 placeholder="Repetir senha"
                 secureTextEntry
+                returnKeyType="send"
+                onSubmitEditing={() => formRef.current?.submitForm()}
               />
               <Button
                 onPress={() => {

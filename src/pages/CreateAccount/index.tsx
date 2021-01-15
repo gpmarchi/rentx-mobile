@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  TextInput,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
@@ -17,6 +18,8 @@ import { Container, Title, Subtitle, FormTitle } from './styles';
 
 const CreateAccount: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const emailInputRef = useRef<TextInput>(null);
+
   const navigation = useNavigation();
 
   const handleAccountCreation = useCallback(
@@ -46,8 +49,26 @@ const CreateAccount: React.FC = () => {
               <FormTitle>01. Dados</FormTitle>
             </View>
             <Form ref={formRef} onSubmit={handleAccountCreation}>
-              <Input name="name" icon="person-outline" placeholder="Nome" />
-              <Input name="email" icon="mail-outline" placeholder="E-mail" />
+              <Input
+                name="name"
+                icon="person-outline"
+                placeholder="Nome"
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  emailInputRef.current?.focus();
+                }}
+              />
+              <Input
+                ref={emailInputRef}
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                name="email"
+                icon="mail-outline"
+                placeholder="E-mail"
+                returnKeyType="send"
+                onSubmitEditing={() => formRef.current?.submitForm()}
+              />
               <Button
                 onPress={() => {
                   formRef.current?.submitForm();
