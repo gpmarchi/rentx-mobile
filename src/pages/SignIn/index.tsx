@@ -5,10 +5,14 @@ import {
   ScrollView,
   Platform,
   TextInput,
+  Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
+
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -24,6 +28,11 @@ import {
   ForgotPasswordText,
 } from './styles';
 
+interface SignInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
@@ -33,9 +42,36 @@ const SignIn: React.FC = () => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   const handleSignIn = useCallback(
-    (data: object) => {
-      console.log(data);
-      navigation.navigate('CreatePassword', data);
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
+
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().required('Senha obrigatória'),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        navigation.navigate('CarSearch', data);
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(error);
+
+          formRef.current?.setErrors(errors);
+
+          return;
+        }
+
+        Alert.alert(
+          'Erro na autenticação',
+          'Ocorreu um erro ao fazer login, verifique as credenciais.',
+        );
+      }
     },
     [navigation],
   );

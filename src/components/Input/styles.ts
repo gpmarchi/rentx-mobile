@@ -1,5 +1,9 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
+interface TextInputContainerProps {
+  isErrored: boolean;
+}
 
 export const Container = styled.View`
   width: 100%;
@@ -26,7 +30,7 @@ export const Icon = styled(MaterialIcon)`
   color: #7a7a80;
 `;
 
-export const TextInputContainer = styled.View`
+export const TextInputContainer = styled.View<TextInputContainerProps>`
   width: 83%;
   height: 56px;
   padding: 0 16px;
@@ -34,6 +38,13 @@ export const TextInputContainer = styled.View`
 
   flex-direction: row;
   align-items: center;
+
+  ${props =>
+    props.isErrored &&
+    css`
+      border: 2px;
+      border-color: #c53030;
+    `};
 `;
 
 export const TextInput = styled.TextInput`

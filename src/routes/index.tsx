@@ -7,6 +7,7 @@ import CreateAccount from '../pages/CreateAccount';
 import CreatePassword from '../pages/CreatePassword';
 import ConfirmRegistration from '../pages/ConfirmRegistration';
 import SignIn from '../pages/SignIn';
+import CarSearch from '../pages/CarSearch';
 
 const App = createStackNavigator();
 
@@ -34,6 +35,11 @@ const AppRoutes: React.FC = () => (
       options={{ headerShown: true, headerBackTitleVisible: false, title: '' }}
       name="SignIn"
       component={SignIn}
+    />
+    <App.Screen
+      options={{ headerShown: true, headerBackTitleVisible: false, title: '' }}
+      name="CarSearch"
+      component={CarSearch}
     />
   </App.Navigator>
 );

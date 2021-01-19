@@ -6,10 +6,14 @@ import {
   ScrollView,
   Platform,
   TextInput,
+  Alert,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
+
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -19,6 +23,11 @@ import { Container, Title, Subtitle, FormTitle } from './styles';
 interface RouteParams {
   name: string;
   email: string;
+}
+
+interface CreatePasswordFormData {
+  password: string;
+  confirmation: string;
 }
 
 const CreatePassword: React.FC = () => {
@@ -32,10 +41,36 @@ const CreatePassword: React.FC = () => {
   const routeParams = params as RouteParams;
 
   const handleUserSignUp = useCallback(
-    (data: object) => {
-      console.log(routeParams);
-      console.log(data);
-      navigation.navigate('ConfirmRegistration');
+    async (data: CreatePasswordFormData) => {
+      try {
+        formRef.current?.setErrors({});
+
+        const schema = Yup.object().shape({
+          password: Yup.string().required('Senha obrigatória'),
+          confirmation: Yup.string().required(
+            'Confirmação de senha obrigatória',
+          ),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        navigation.navigate('ConfirmRegistration');
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(error);
+
+          formRef.current?.setErrors(errors);
+
+          return;
+        }
+
+        Alert.alert(
+          'Erro na criação da conta',
+          'Ocorreu um erro ao criar a conta, tente novamente.',
+        );
+      }
     },
     [navigation, routeParams],
   );

@@ -10,11 +10,19 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
+
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import { Container, Title, Subtitle, FormTitle } from './styles';
+
+interface CreateAccountFormData {
+  name: string;
+  email: string;
+}
 
 const CreateAccount: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
@@ -23,9 +31,29 @@ const CreateAccount: React.FC = () => {
   const navigation = useNavigation();
 
   const handleAccountCreation = useCallback(
-    (data: object) => {
-      console.log(data);
-      navigation.navigate('CreatePassword', data);
+    async (data: CreateAccountFormData) => {
+      try {
+        formRef.current?.setErrors({});
+
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório'),
+          email: Yup.string()
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        navigation.navigate('CreatePassword', data);
+      } catch (error) {
+        if (error instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(error);
+
+          formRef.current?.setErrors(errors);
+        }
+      }
     },
     [navigation],
   );

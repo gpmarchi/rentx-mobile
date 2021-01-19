@@ -65,7 +65,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
         <Icon name={icon} size={28} />
       </IconContainer>
 
-      <TextInputContainer>
+      <TextInputContainer isErrored={!!error}>
         <TextInput
           ref={inputElementRef}
           keyboardAppearance="light"
