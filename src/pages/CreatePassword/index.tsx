@@ -13,6 +13,8 @@ import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
+import api from '../../services/api';
+
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import Button from '../../components/Button';
@@ -47,14 +49,19 @@ const CreatePassword: React.FC = () => {
 
         const schema = Yup.object().shape({
           password: Yup.string().required('Senha obrigatória'),
-          confirmation: Yup.string().required(
-            'Confirmação de senha obrigatória',
-          ),
+          password_confirmation: Yup.string()
+            .oneOf(
+              [Yup.ref('password'), null],
+              'Confirmação deve ser igual a senha',
+            )
+            .required('Confirmação de senha obrigatória'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
+
+        await api.post('/users', { ...routeParams, ...data });
 
         navigation.navigate('ConfirmRegistration');
       } catch (error) {
@@ -106,7 +113,7 @@ const CreatePassword: React.FC = () => {
               />
               <Input
                 ref={confirmInputRef}
-                name="confirmation"
+                name="password_confirmation"
                 icon="lock-outline"
                 placeholder="Repetir senha"
                 secureTextEntry

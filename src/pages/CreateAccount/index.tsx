@@ -27,6 +27,7 @@ interface CreateAccountFormData {
 const CreateAccount: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const emailInputRef = useRef<TextInput>(null);
+  const phoneInputRef = useRef<TextInput>(null);
 
   const navigation = useNavigation();
 
@@ -40,6 +41,7 @@ const CreateAccount: React.FC = () => {
           email: Yup.string()
             .required('E-mail obrigatório')
             .email('Digite um e-mail válido'),
+          phone: Yup.string().required('Telefone obrigatório'),
         });
 
         await schema.validate(data, {
@@ -94,6 +96,17 @@ const CreateAccount: React.FC = () => {
                 name="email"
                 icon="mail-outline"
                 placeholder="E-mail"
+                returnKeyType="next"
+                onSubmitEditing={() => phoneInputRef.current?.focus()}
+              />
+              <Input
+                ref={phoneInputRef}
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="phone-pad"
+                name="phone"
+                icon="smartphone"
+                placeholder="Telefone"
                 returnKeyType="send"
                 onSubmitEditing={() => formRef.current?.submitForm()}
               />
